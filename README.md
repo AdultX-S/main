@@ -57,12 +57,3 @@ AdultX/
     python -m unittest tests/test_agent.py
     ```
 3.  Open the `web_app/index.html` file in your browser.
-
-# AI Agent dependencies
-# Add required packages for AI agent development, e.g.:
-# tensorflow==2.11.0
-# pytorch==1.13.1
-# scikit-learn==1.2.0
-
-# For testing
-pytest
