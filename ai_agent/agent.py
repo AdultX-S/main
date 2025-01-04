@@ -1,3 +1,7 @@
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
 class AIAgent:
     def __init__(self, user_id):
         self.user_id = user_id
@@ -25,26 +29,35 @@ class AIAgent:
     def generate_recommendation(self, preferences):
         """Generates recommendations based on analysis results."""
         # Implement recommendation generation logic here (placeholder implementation)
-        recommendation = ""
+        recommendations = []
         if preferences:
-            recommendation = f"Recommended content for {preferences['actress_preference']} in {preferences['genre_preference']} genre."
+            recommendations.append(f"Recommended content for {preferences['actress_preference']} in {preferences['genre_preference']} genre.")
+            recommendations.append(f"More content featuring {preferences['actress_preference']}.")
+            recommendations.append(f"Other content in the {preferences['genre_preference']} genre.")
             print(f"Generated recommendation for user: {self.user_id}")
         else:
             print("No preferences found to generate recommendation.")
-        return recommendation
+        return recommendations
 
 
-# Test code
-if __name__ == "__main__":
-    agent = AIAgent(user_id="test_user")
+# Create a dummy agent for testing
+agent = AIAgent(user_id="test_user")
 
-    # Load test data
+@app.route('/api/recommendations')
+def get_recommendations():
+    user_id = request.args.get('user_id')
+
+    # Load user data (In a real application, this would be fetched from a database)
     user_data = {"age": 30, "gender": "male"}
     agent.load_user_data(user_data)
 
     # Analyze preferences
     preferences = agent.analyze_preferences()
 
-    # Generate recommendation
-    recommendation = agent.generate_recommendation(preferences)
-    print(recommendation)
+    # Generate recommendations
+    recommendations = agent.generate_recommendation(preferences)
+
+    return jsonify({'recommendations': recommendations})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
