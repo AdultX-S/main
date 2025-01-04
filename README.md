@@ -58,13 +58,6 @@ AdultX/
     ```
 3.  Open the `web_app/index.html` file in your browser.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-2. requirements.txt
-
-このファイルは、プロジェクトで使用するPythonの依存パッケージを記述します。
-
 # AI Agent dependencies
 # Add required packages for AI agent development, e.g.:
 # tensorflow==2.11.0
