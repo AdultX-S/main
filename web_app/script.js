@@ -7,23 +7,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const userId = 'test_user_123';
     userIdElement.textContent = userId;
 
-    // Simulate fetching recommendations from the AI agent
-    const preferences = {
-        "actress_preference": "Emily",
-        "genre_preference": "Romance"
-    };
-
-    const recommendation = generateRecommendation(preferences);
-
-    // Display the recommendation
-    const recommendationItem = document.createElement('p');
-    recommendationItem.textContent = recommendation;
-    recommendationListElement.appendChild(recommendationItem);
-
-
-    // Placeholder function to simulate AI agent's recommendation generation
-    function generateRecommendation(preferences) {
-        // In a real application, this would involve an API call to the backend
-        return `Recommended content for ${preferences.actress_preference} in ${preferences.genre_preference} genre.`;
-    }
+    // Fetch recommendations from the AI agent
+    fetch(`/api/recommendations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            // Display the recommendations
+            data.recommendations.forEach(recommendation => {
+                const recommendationItem = document.createElement('li'); // Change to <li>
+                recommendationItem.textContent = recommendation;
+                recommendationListElement.appendChild(recommendationItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching recommendations:', error);
+            const errorItem = document.createElement('p');
+            errorItem.textContent = 'Error fetching recommendations. Please try again later.';
+            recommendationListElement.appendChild(errorItem);
+        });
 });
